@@ -1,24 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import {
-  Menu,
-  ShoppingCart,
-  Heart,
-  Scale,
-  Flame,
-  Timer,
-  User,
-  Store,
-  Package,
-  Shield,
-  Headphones,
-  Smartphone,
-  TrendingUp,
-  Bell,
-  Settings,
-  LogOut,
-} from "lucide-react";
+import { Badge } from "@klayk/ui/components/ui/badge";
+import { ScrollArea } from "@klayk/ui/components/ui/scroll-area";
+import { Separator } from "@klayk/ui/components/ui/separator";
 import {
   Sheet,
   SheetContent,
@@ -26,10 +10,26 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@klayk/ui/components/ui/sheet";
-import { ScrollArea } from "@klayk/ui/components/ui/scroll-area";
-import { Separator } from "@klayk/ui/components/ui/separator";
-import { Badge } from "@klayk/ui/components/ui/badge";
-import { useState, useEffect, useCallback } from "react";
+import {
+  Bell,
+  Flame,
+  Headphones,
+  Heart,
+  LogOut,
+  Menu,
+  Package,
+  Scale,
+  Settings,
+  Shield,
+  ShoppingCart,
+  Smartphone,
+  Store,
+  Timer,
+  TrendingUp,
+  User,
+} from "lucide-react";
+import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
 
 // Типи для TypeScript
 interface MenuItem {
@@ -151,94 +151,64 @@ const userSettings: InfoItem[] = [
 
 export function MobileMenu() {
   const [open, setOpen] = useState(false);
-  const [cartItemsCount, setCartItemsCount] = useState(0);
-  const [wishlistCount, setWishlistCount] = useState(0);
 
   // Оптимізована функція закриття меню
   const handleClose = useCallback(() => {
     setOpen(false);
   }, []);
 
-  // Імітація завантаження даних про кількість товарів
-  useEffect(() => {
-    // В реальному додатку тут буде API запит
-    setCartItemsCount(
-      mainMenuItems.find((item) => item.href === "/cart")?.badge || 0,
-    );
-    setWishlistCount(
-      mainMenuItems.find((item) => item.href === "/wishlist")?.badge || 0,
-    );
-  }, []);
-
-  // Компонент для відображення пункту меню
-  const MenuItemComponent = ({
-    item,
-    onClick,
-  }: {
-    item: MenuItem;
-    onClick?: () => void;
-  }) => (
-    <Link
-      href={item.href}
-      onClick={onClick}
-      className="group flex items-center justify-between p-3 rounded-xl 
-                 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 
-                 transition-all duration-200 ease-in-out
-                 active:scale-95 active:bg-blue-100"
-    >
-      <div className="flex items-center gap-3">
-        <div
-          className="p-2 rounded-lg bg-gray-50 group-hover:bg-white 
-                        group-hover:shadow-sm transition-all duration-200"
-        >
-          {item.icon}
-        </div>
-        <span className="text-sm font-medium text-gray-900 group-hover:text-blue-700">
-          {item.label}
-        </span>
+// Компонент для відображення пункту меню
+const MenuItemComponent = ({ item, onClick }: { item: MenuItem; onClick?: () => void }) => (
+  <Link
+    href={item.href}
+    onClick={onClick}
+    className="group flex items-center justify-between p-3 rounded-xl 
+               hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 
+               transition-all duration-200 ease-in-out
+               active:scale-95 active:bg-blue-100"
+  >
+    <div className="flex items-center gap-3">
+      <div
+        className="p-2 rounded-lg bg-gray-50 group-hover:bg-white 
+                      group-hover:shadow-sm transition-all duration-200"
+      >
+        {item.icon}
       </div>
-      <div className="flex items-center gap-2">
-        {item.isNew && (
-          <Badge
-            variant="secondary"
-            className="bg-green-100 text-green-700 text-xs px-2 py-1"
-          >
-            Нове
-          </Badge>
-        )}
-        {item.badge && item.badge > 0 && (
-          <Badge
-            className="bg-red-500 text-white text-xs min-w-[20px] h-5 
-                           flex items-center justify-center rounded-full"
-          >
-            {item.badge > 99 ? "99+" : item.badge}
-          </Badge>
-        )}
-      </div>
-    </Link>
-  );
-
-  // Компонент для інформаційних пунктів
-  const InfoItemComponent = ({
-    item,
-    onClick,
-  }: {
-    item: InfoItem;
-    onClick?: () => void;
-  }) => (
-    <Link
-      href={item.href}
-      onClick={onClick}
-      className="flex items-center gap-3 p-2 rounded-lg 
-                 hover:bg-gray-50 transition-colors duration-150
-                 active:bg-gray-100"
-    >
-      {item.icon}
-      <span className="text-sm text-gray-700 hover:text-gray-900">
+      <span className="text-sm font-medium text-gray-900 group-hover:text-blue-700">
         {item.label}
       </span>
-    </Link>
-  );
+    </div>
+    <div className="flex items-center gap-2">
+      {item.isNew && (
+        <Badge variant="secondary" className="bg-green-100 text-green-700 text-xs px-2 py-1">
+          Нове
+        </Badge>
+      )}
+      {item.badge && item.badge > 0 && (
+        <Badge
+          className="bg-red-500 text-white text-xs min-w-[20px] h-5 
+                         flex items-center justify-center rounded-full"
+        >
+          {item.badge > 99 ? "99+" : item.badge}
+        </Badge>
+      )}
+    </div>
+  </Link>
+);
+
+// Компонент для інформаційних пунктів
+const InfoItemComponent = ({ item, onClick }: { item: InfoItem; onClick?: () => void }) => (
+  <Link
+    href={item.href}
+    onClick={onClick}
+    className="flex items-center gap-3 p-2 rounded-lg 
+               hover:bg-gray-50 transition-colors duration-150
+               active:bg-gray-100"
+  >
+    {item.icon}
+    <span className="text-sm text-gray-700 hover:text-gray-900">{item.label}</span>
+  </Link>
+);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -277,11 +247,7 @@ export function MobileMenu() {
               </div>
               <div className="space-y-1">
                 {mainMenuItems.map((item) => (
-                  <MenuItemComponent
-                    key={item.href}
-                    item={item}
-                    onClick={handleClose}
-                  />
+                  <MenuItemComponent key={item.href} item={item} onClick={handleClose} />
                 ))}
               </div>
             </div>
@@ -296,11 +262,7 @@ export function MobileMenu() {
               </div>
               <div className="space-y-1">
                 {catalogItems.map((item) => (
-                  <MenuItemComponent
-                    key={item.href}
-                    item={item}
-                    onClick={handleClose}
-                  />
+                  <MenuItemComponent key={item.href} item={item} onClick={handleClose} />
                 ))}
               </div>
             </div>
@@ -315,11 +277,7 @@ export function MobileMenu() {
               </div>
               <div className="space-y-1">
                 {infoItems.map((item) => (
-                  <InfoItemComponent
-                    key={item.href}
-                    item={item}
-                    onClick={handleClose}
-                  />
+                  <InfoItemComponent key={item.href} item={item} onClick={handleClose} />
                 ))}
               </div>
             </div>
@@ -334,11 +292,7 @@ export function MobileMenu() {
               </div>
               <div className="space-y-1">
                 {userSettings.map((item) => (
-                  <InfoItemComponent
-                    key={item.href}
-                    item={item}
-                    onClick={handleClose}
-                  />
+                  <InfoItemComponent key={item.href} item={item} onClick={handleClose} />
                 ))}
               </div>
             </div>
@@ -349,18 +303,13 @@ export function MobileMenu() {
                             rounded-2xl border border-blue-100"
             >
               <div className="text-center space-y-2">
-                <p className="text-sm font-medium text-gray-900">
-                  Маркетплейс №1 в Україні
-                </p>
+                <p className="text-sm font-medium text-gray-900">Маркетплейс №1 в Україні</p>
                 <p className="text-xs text-gray-600">
                   Понад 1 мільйон товарів від перевірених продавців
                 </p>
                 <div className="flex justify-center space-x-1 mt-2">
                   {[...Array(5)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="w-2 h-2 bg-yellow-400 rounded-full"
-                    ></div>
+                    <div key={`star-${i}`} className="w-2 h-2 bg-yellow-400 rounded-full"></div>
                   ))}
                 </div>
               </div>

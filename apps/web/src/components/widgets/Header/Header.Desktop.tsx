@@ -1,11 +1,11 @@
-import Link from "next/link";
+import { Flame, Heart, Scale, ShoppingCart } from "lucide-react";
 import Image from "next/image";
-import { ShoppingCart, Heart, Scale, Flame } from "lucide-react";
-import { CatalogMenu } from "@/components/elements/CatalogHeader/CatalogMenu";
-import { SearchBar } from "@/components/elements/Search/SearchBar";
-import { LanguageSwitcher } from "@/components/elements/LanguageElement/LanguageSwitcher";
-import { ProfileButton } from "@/components/elements/Profile/ProfileButton";
+import Link from "next/link";
 import { NavIcon } from "@/components/client/NavIcon";
+import { CatalogMenu } from "@/components/elements/CatalogHeader/CatalogMenu";
+import { LanguageSwitcher } from "@/components/elements/LanguageElement/LanguageSwitcher";
+import ProfileButton from "@/components/elements/Profile/ProfileButton";
+import { SearchBar } from "@/components/elements/Search/SearchBar";
 
 interface HeaderDesktopProps {
   cartCount?: number;
@@ -19,9 +19,21 @@ export function HeaderDesktop({
   compareCount = 0,
 }: HeaderDesktopProps) {
   const navIcons = [
-    { href: "/wishlist", icon: Heart, count: wishlistCount, label: "Вішліст" },
-    { href: "/compare", icon: Scale, count: compareCount, label: "Порівняння" },
-    { href: "/cart", icon: ShoppingCart, count: cartCount, label: "Кошик" },
+    {
+      href: "/wishlist",
+      icon: Heart,
+      count: wishlistCount,
+      title: "Вішліст",
+      ariaLabel: "Вішліст",
+    },
+    {
+      href: "/compare",
+      icon: Scale,
+      count: compareCount,
+      title: "Порівняння",
+      ariaLabel: "Порівняння",
+    },
+    { href: "/cart", icon: ShoppingCart, count: cartCount, title: "Кошик", ariaLabel: "Кошик" },
   ];
 
   return (

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./*": "./src/*.tsx"
+    "./*": "./src/*"
   },
   "scripts": {
     "lint": "bun x @biomejs/biome lint ./src",

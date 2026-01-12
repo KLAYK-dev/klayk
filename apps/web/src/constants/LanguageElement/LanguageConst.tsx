@@ -1,11 +1,24 @@
 export type LanguageCode =
-  | "uk" | "en" | "pl" | "de" | "fr" | "it"
-  | "es" | "pt" | "ro" | "cs" | "sk" | "bg"
-  | "hu" | "lt" | "lv" | "et";
+  | "uk"
+  | "en"
+  | "pl"
+  | "de"
+  | "fr"
+  | "it"
+  | "es"
+  | "pt"
+  | "ro"
+  | "cs"
+  | "sk"
+  | "bg"
+  | "hu"
+  | "lt"
+  | "lv"
+  | "et";
 
 export interface Language {
   code: LanguageCode;
-  label: string;       // Назва мовою інтерфейсу
+  label: string; // Назва мовою інтерфейсу
   nativeLabel: string; // Назва мовою оригіналу (як бачить носій)
 }
 

@@ -19,7 +19,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@klayk/ui": ["../../packages/ui/src"],
+      "@klayk/ui/*": ["../../packages/ui/src/*"]
     }
   },
   "include": [

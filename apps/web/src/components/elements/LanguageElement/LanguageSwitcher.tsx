@@ -1,9 +1,9 @@
 "use client";
 
-import { useRouter, usePathname } from "next/navigation";
-import { useState } from "react";
 import clsx from "clsx";
-import { languages, defaultLanguage } from "@/constants/LanguageElement/LanguageConst";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
+import { defaultLanguage, languages } from "@/constants/LanguageElement/LanguageConst";
 
 export function LanguageSwitcher() {
   const router = useRouter();
@@ -47,7 +47,7 @@ export function LanguageSwitcher() {
                 onClick={() => handleChangeLanguage(lang.code)}
                 className={clsx(
                   "px-4 py-2 text-left hover:bg-gray-100 hover:text-green-600 transition-colors",
-                  lang.code === currentLang && "bg-gray-200 font-semibold"
+                  lang.code === currentLang && "bg-gray-200 font-semibold",
                 )}
               >
                 <span className="text-lg mr-2">{lang.code.toUpperCase()}</span>

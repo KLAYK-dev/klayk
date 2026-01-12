@@ -1,15 +1,13 @@
 // components/ProfileButton.tsx
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useState, useEffect, useCallback } from "react";
-import AuthModal from "@/components/elements/Auth/AuthModal";
 import { Avatar, AvatarFallback, AvatarImage } from "@klayk/ui/components/ui/avatar";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useCallback, useEffect, useState } from "react";
+import AuthModal from "@/components/elements/Auth/AuthModal";
 
-interface ProfileButtonProps {}
-
-export default function ProfileButton({}: ProfileButtonProps) {
+export default function ProfileButton() {
   const { data: session, status } = useSession();
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const router = useRouter();
@@ -50,6 +48,7 @@ export default function ProfileButton({}: ProfileButtonProps) {
   return (
     <>
       <button
+        type="button"
         onClick={handleProfileClick}
         className="flex flex-col items-center text-sm text-white/90 hover:text-green-300 p-1 rounded-md border border-transparent hover:border-green-300 transition-colors"
         aria-label="Профіль"
@@ -59,9 +58,7 @@ export default function ProfileButton({}: ProfileButtonProps) {
           {status === "authenticated" ? (
             <>
               <AvatarImage src={session?.user?.image ?? "/4a03.jfif"} />
-              <AvatarFallback>
-                {session?.user?.name?.charAt(0) || "KLAYK"}
-              </AvatarFallback>
+              <AvatarFallback>{session?.user?.name?.charAt(0) || "KLAYK"}</AvatarFallback>
             </>
           ) : (
             <>
@@ -73,11 +70,7 @@ export default function ProfileButton({}: ProfileButtonProps) {
       </button>
 
       {isModalOpen && (
-        <AuthModal
-          isOpen={isModalOpen}
-          onClose={handleModalClose}
-          defaultView="signin"
-        />
+        <AuthModal isOpen={isModalOpen} onClose={handleModalClose} defaultView="signin" />
       )}
     </>
   );

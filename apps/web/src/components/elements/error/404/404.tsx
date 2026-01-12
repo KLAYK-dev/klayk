@@ -1,11 +1,10 @@
 "use client";
 
-import type React from "react";
-
-import { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { Button } from "@klayk/ui/components/ui/button";
+import { Gamepad2, Home, ShoppingBag, ZapIcon } from "lucide-react";
 import Link from "next/link";
-import { ShoppingBag, Home, ZapIcon, Gamepad2 } from "lucide-react";
+import type React from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 // Оптимізуємо константи, винесемо їх за межі компонента
 const NEON_GREEN = "#00FF66";
@@ -46,7 +45,7 @@ export default function NotFoundPage() {
   const [showControls, setShowControls] = useState(false);
 
   // Використовуємо useRef для зберігання значень, які не впливають на рендеринг
-  const droneRef = useRef<HTMLDivElement>(null);
+  const droneRef = useRef<HTMLButtonElement>(null);
   const animationFrameRef = useRef<number>(1);
   const frameCount = useRef(0);
   const currentPositionRef = useRef(dronePosition);
@@ -55,7 +54,7 @@ export default function NotFoundPage() {
   const lastClickTimeRef = useRef(0);
   const keyPressedRef = useRef<{ [key: string]: boolean }>({});
   const isUserControlledRef = useRef(false);
-  const colorChangeInterval = useRef<NodeJS.Timeout>();
+  const colorChangeInterval = useRef<NodeJS.Timeout | null>(null);
 
   // Мемоізуємо значення, щоб уникнути зайвих обчислень
   const isUserControlled = useMemo(
@@ -275,13 +274,13 @@ export default function NotFoundPage() {
       if (droneState.controlMode === "keyboard") {
         const speed = droneState.turboMode ? 8 : 4;
 
-        if (keyPressedRef.current["ArrowUp"] || keyPressedRef.current["w"])
+        if (keyPressedRef.current.ArrowUp || keyPressedRef.current.w)
           vy = -speed;
-        if (keyPressedRef.current["ArrowDown"] || keyPressedRef.current["s"])
+        if (keyPressedRef.current.ArrowDown || keyPressedRef.current.s)
           vy = speed;
-        if (keyPressedRef.current["ArrowLeft"] || keyPressedRef.current["a"])
+        if (keyPressedRef.current.ArrowLeft || keyPressedRef.current.a)
           vx = -speed;
-        if (keyPressedRef.current["ArrowRight"] || keyPressedRef.current["d"])
+        if (keyPressedRef.current.ArrowRight || keyPressedRef.current.d)
           vx = speed;
 
         // Розрахунок кута нахилу
@@ -562,9 +561,9 @@ export default function NotFoundPage() {
               <div className="flex items-center justify-between">
                 <span>Колір дрона:</span>
                 <div className="flex space-x-1">
-                  {DRONE_COLORS.map((color, index) => (
+                  {DRONE_COLORS.map((color) => (
                     <button
-                      key={index}
+                      key={`drone-color-${color}`}
                       type="button"
                       title={`Change drone color to ${color}`}
                       onClick={() =>
@@ -649,9 +648,10 @@ export default function NotFoundPage() {
       </div>
 
       {/* Літаючий інтерактивний дрон - оптимізований */}
-      <div
+      <button
+        type="button"
         ref={droneRef}
-        className="absolute z-40 h-[120px] w-[120px] cursor-pointer transition-transform duration-300"
+        className="absolute z-40 h-[120px] w-[120px] cursor-pointer transition-transform duration-300 border-none bg-transparent p-0"
         style={{
           left: `calc(50% + ${dronePosition.x}px)`,
           top: `calc(50% + ${dronePosition.y}px)`,
@@ -707,7 +707,7 @@ export default function NotFoundPage() {
         {/* Пропелери дрона - оптимізовані */}
         {[...Array(4)].map((_, i) => (
           <div
-            key={i}
+            key={`propeller-${i}`}
             className="absolute h-[25px] w-[25px]"
             style={{
               top: i < 2 ? "10px" : "auto",
@@ -771,7 +771,7 @@ export default function NotFoundPage() {
               : "droneGlow 3s ease-in-out infinite",
           }}
         />
-      </div>
+      </button>
 
       {/* Підключення Google Fonts - оптимізовано для швидшого завантаження */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />

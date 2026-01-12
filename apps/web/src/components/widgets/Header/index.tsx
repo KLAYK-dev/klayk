@@ -1,9 +1,9 @@
-import { getDevice } from "@components/widgets/Header/device";
-import { HeaderDesktop } from "@components/widgets/Header/Header.Desktop";
-import { HeaderMobile } from "@components/widgets/Header/Header.Mobile";
-import { getCartCount } from "@components/widgets/Header/getCartCount";
-import { getWishlistCount } from "@components/widgets/Header/getWishlistCount";
-import { getCompareCount } from "@components/widgets/Header/getCompareCount";
+import { getDevice } from "@/components/widgets/Header/device";
+import { getCartCount } from "@/components/widgets/Header/getCartCount";
+import { getCompareCount } from "@/components/widgets/Header/getCompareCount";
+import { getWishlistCount } from "@/components/widgets/Header/getWishlistCount";
+import { HeaderDesktop } from "@/components/widgets/Header/Header.Desktop";
+import { HeaderMobile } from "@/components/widgets/Header/Header.Mobile";
 
 /**
  * Main Header Server Component

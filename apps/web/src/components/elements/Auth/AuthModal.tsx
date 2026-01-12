@@ -1,23 +1,17 @@
 // components/AuthModal.tsx
 "use client";
-import { useState, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { Check, ChevronLeft, Loader2, Mail, Phone, X } from "lucide-react";
-import { signIn } from "next-auth/react";
 import { Button } from "@klayk/ui/components/ui/button";
 import { Input } from "@klayk/ui/components/ui/input";
 import { Label } from "@klayk/ui/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@klayk/ui/components/ui/tabs";
 import { Separator } from "@klayk/ui/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@klayk/ui/components/ui/tabs";
+import { AnimatePresence, motion } from "framer-motion";
+import { Check, ChevronLeft, Loader2, Mail, Phone, X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import { useEffect, useId, useState } from "react";
 
-type AuthView =
-  | "signin"
-  | "signup"
-  | "phone"
-  | "otp"
-  | "reset-password"
-  | "reset-password-sent";
+type AuthView = "signin" | "signup" | "phone" | "otp" | "reset-password" | "reset-password-sent";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -34,7 +28,7 @@ export default function AuthModal({
 }: AuthModalProps) {
   // Защита от undefined
   const handleClose = () => {
-    if (typeof onClose === 'function') {
+    if (typeof onClose === "function") {
       onClose();
     }
   };
@@ -63,6 +57,11 @@ export default function AuthModal({
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
+  const phoneId = useId();
+  const emailId = useId();
+  const passwordId = useId();
+  const resetEmailId = useId();
+
   const handleOtpChange = (index: number, value: string) => {
     if (value.length > 1) value = value[0];
     const newOtp = [...otp];
@@ -74,10 +73,7 @@ export default function AuthModal({
     }
   };
 
-  const handleKeyDown = (
-    index: number,
-    e: React.KeyboardEvent<HTMLInputElement>,
-  ) => {
+  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
       const prevInput = document.getElementById(`otp-${index - 1}`);
       if (prevInput) prevInput.focus();
@@ -115,7 +111,7 @@ export default function AuthModal({
       } else {
         handleSuccessLogin();
       }
-    } catch (err) {
+    } catch (_err) {
       setError("Сталася неочікувана помилка");
     } finally {
       setIsLoading(false);
@@ -129,7 +125,7 @@ export default function AuthModal({
     try {
       await signIn(provider, { redirect: false });
       handleSuccessLogin();
-    } catch (err) {
+    } catch (_err) {
       setError("Не вдалося увійти через соціальну мережу");
     } finally {
       setIsLoading(false);
@@ -137,7 +133,7 @@ export default function AuthModal({
   };
 
   const handleSuccessLogin = () => {
-    if (typeof onLogin === 'function') {
+    if (typeof onLogin === "function") {
       onLogin();
     }
     handleClose();
@@ -184,6 +180,7 @@ export default function AuthModal({
             >
               <div className="relative">
                 <button
+                  type="button"
                   onClick={handleClose}
                   className="absolute right-0 top-0 rounded-full p-1 text-black hover:bg-gray-100 hover:text-black"
                   aria-label="Закрити"
@@ -193,6 +190,7 @@ export default function AuthModal({
 
                 {previousView && (
                   <button
+                    type="button"
                     onClick={goBack}
                     className="absolute left-0 top-0 rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
                     aria-label="Назад"
@@ -220,11 +218,9 @@ export default function AuthModal({
                     {view === "reset-password-sent" && "Перевірте вашу пошту"}
                   </h2>
                   <p className="mt-1 text-sm text-gray-500">
-                    {view === "signin" &&
-                      "Увійдіть до вашого облікового запису"}
+                    {view === "signin" && "Увійдіть до вашого облікового запису"}
                     {view === "signup" && "Приєднуйтесь до нашої платформи"}
-                    {view === "phone" &&
-                      "Ми надішлемо код для перевірки вашого телефону"}
+                    {view === "phone" && "Ми надішлемо код для перевірки вашого телефону"}
                     {view === "otp" && `Код надіслано на ${phoneNumber}`}
                     {view === "reset-password" &&
                       "Введіть вашу електронну пошту для скидання паролю"}
@@ -234,9 +230,7 @@ export default function AuthModal({
                 </div>
 
                 {error && (
-                  <div className="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-600">
-                    {error}
-                  </div>
+                  <div className="mb-4 rounded-lg bg-red-50 p-3 text-sm text-red-600">{error}</div>
                 )}
 
                 {(view === "signin" || view === "signup") && (
@@ -248,13 +242,13 @@ export default function AuthModal({
                     <TabsContent value="phone" className="space-y-4">
                       <form onSubmit={(e) => e.preventDefault()}>
                         <div className="space-y-2">
-                          <Label htmlFor="phone">Номер телефону</Label>
+                          <Label htmlFor={phoneId}>Номер телефону</Label>
                           <div className="flex">
                             <div className="flex items-center justify-center rounded-l-md border border-black border-r-0 bg-gray-50 px-3 text-sm">
                               +380
                             </div>
                             <Input
-                              id="phone"
+                              id={phoneId}
                               type="tel"
                               className="rounded-l-none border-black focus:border-[#FF8000] focus:ring-[#FF8000]"
                               placeholder="97 123 4567"
@@ -279,24 +273,16 @@ export default function AuthModal({
                           className="font-medium text-gray-500 hover:underline p-0 bg-transparent"
                           onClick={() => setView("signin")}
                         >
-                          <span className="text-[#000000FF]">
-                            Увійти через email
-                          </span>
+                          <span className="text-[#000000FF]">Увійти через email</span>
                         </button>
                       </div>
                     </TabsContent>
                     <TabsContent value="email" className="space-y-4">
-                      <form
-                        onSubmit={
-                          view === "signin"
-                            ? handleEmailSignIn
-                            : handleEmailSignIn
-                        }
-                      >
+                      <form onSubmit={view === "signin" ? handleEmailSignIn : handleEmailSignIn}>
                         <div className="space-y-2">
-                          <Label htmlFor="email">Email</Label>
+                          <Label htmlFor={emailId}>Email</Label>
                           <Input
-                            id="email"
+                            id={emailId}
                             type="email"
                             placeholder="name@example.com"
                             value={email}
@@ -306,9 +292,9 @@ export default function AuthModal({
                           />
                         </div>
                         <div className="space-y-2 mt-4">
-                          <Label htmlFor="password">Пароль</Label>
+                          <Label htmlFor={passwordId}>Пароль</Label>
                           <Input
-                            id="password"
+                            id={passwordId}
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -324,9 +310,7 @@ export default function AuthModal({
                               className="text-sm text-gray-500 hover:underline font-semibold"
                               onClick={() => navigateTo("reset-password")}
                             >
-                              <span className="text-[#030303FF]">
-                                Забули пароль?
-                              </span>
+                              <span className="text-[#030303FF]">Забули пароль?</span>
                             </button>
                           </div>
                         )}
@@ -355,13 +339,13 @@ export default function AuthModal({
                   <div className="space-y-4">
                     <form onSubmit={(e) => e.preventDefault()}>
                       <div className="space-y-2">
-                        <Label htmlFor="phone">Номер телефону</Label>
+                        <Label htmlFor={phoneId}>Номер телефону</Label>
                         <div className="flex">
                           <div className="flex items-center justify-center rounded-l-md border border-black border-r-0 bg-gray-50 px-3 text-sm">
                             +380
                           </div>
                           <Input
-                            id="phone"
+                            id={phoneId}
                             type="tel"
                             className="rounded-l-none border-black focus:border-[#FF8000] focus:ring-[#FF8000]"
                             placeholder="97 123 4567"
@@ -400,7 +384,7 @@ export default function AuthModal({
                         <div className="flex justify-between gap-2">
                           {otp.map((digit, index) => (
                             <Input
-                              key={index}
+                              key={`otp-${index}`}
                               id={`otp-${index}`}
                               type="text"
                               inputMode="numeric"
@@ -408,9 +392,7 @@ export default function AuthModal({
                               maxLength={1}
                               className="h-12 w-12 text-center text-lg border-green-500 focus:border-green-600 focus:ring-green-600"
                               value={digit}
-                              onChange={(e) =>
-                                handleOtpChange(index, e.target.value)
-                              }
+                              onChange={(e) => handleOtpChange(index, e.target.value)}
                               onKeyDown={(e) => handleKeyDown(index, e)}
                               required
                             />
@@ -457,9 +439,9 @@ export default function AuthModal({
                   <div className="space-y-4">
                     <form onSubmit={(e) => e.preventDefault()}>
                       <div className="space-y-2">
-                        <Label htmlFor="reset-email">Електронна пошта</Label>
+                        <Label htmlFor={resetEmailId}>Електронна пошта</Label>
                         <Input
-                          id="reset-email"
+                          id={resetEmailId}
                           type="email"
                           placeholder="name@example.com"
                           value={email}
@@ -484,9 +466,8 @@ export default function AuthModal({
                   <div className="space-y-4">
                     <div className="rounded-lg bg-green-50 p-4 text-sm text-green-800">
                       <p>
-                        Ми надіслали посилання для скидання паролю на{" "}
-                        <strong>{email}</strong>. Будь ласка, перевірте вашу
-                        скриньку та папку спам.
+                        Ми надіслали посилання для скидання паролю на <strong>{email}</strong>. Будь
+                        ласка, перевірте вашу скриньку та папку спам.
                       </p>
                     </div>
                     <Button
@@ -526,6 +507,7 @@ export default function AuthModal({
                           viewBox="0 0 24 24"
                           className="h-5 w-5"
                         >
+                          <title>Google</title>
                           <path
                             d="M12.0003 4.75C13.7703 4.75 15.3553 5.36002 16.6053 6.54998L20.0303 3.125C17.9502 1.19 15.2353 0 12.0003 0C7.31028 0 3.25527 2.69 1.28027 6.60998L5.27028 9.70498C6.21525 6.86002 8.87028 4.75 12.0003 4.75Z"
                             fill="#EA4335"
@@ -556,6 +538,7 @@ export default function AuthModal({
                           viewBox="0 0 24 24"
                           className="h-5 w-5"
                         >
+                          <title>Facebook</title>
                           <path
                             d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
                             fill="#1877F2"
@@ -574,6 +557,7 @@ export default function AuthModal({
                           viewBox="0 0 24 24"
                           className="h-5 w-5"
                         >
+                          <title>Apple</title>
                           <path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.572-2.27 1.206-2.98.804-.94 2.142-1.64 3.248-1.68.03.13.05.28.05.43zm4.565 15.71c-.03.07-.463 1.58-1.518 3.12-.945 1.34-1.94 2.71-3.43 2.71-1.517 0-1.9-.88-3.63-.88-1.698 0-2.302.91-3.67.91-1.377 0-2.332-1.26-3.428-2.8-1.287-1.82-2.323-4.63-2.323-7.28 0-4.28 2.797-6.55 5.552-6.55 1.448 0 2.675.95 3.6.95.865 0 2.222-1.01 3.902-1.01.613 0 2.886.06 4.374 2.19-.13.09-2.383 1.37-2.383 4.19 0 3.26 2.854 4.42 2.955 4.45z" />
                         </svg>
                       </Button>
@@ -582,21 +566,20 @@ export default function AuthModal({
                 )}
                 {(view === "signin" || view === "signup") && (
                   <p className="mt-4 text-xs text-center text-gray-600">
-                    Всі дані будуть зашифровані. Продовжуючи, ви погоджуєтеся з
-                    нашими{" "}
-                    <a
-                      href="#"
-                      className="text-[#FF8000] hover:underline font-semibold"
+                    Всі дані будуть зашифровані. Продовжуючи, ви погоджуєтеся з нашими{" "}
+                    <button
+                      type="button"
+                      className="text-[#FF8000] hover:underline font-semibold bg-transparent p-0"
                     >
                       Умовами використання
-                    </a>{" "}
+                    </button>{" "}
                     і{" "}
-                    <a
-                      href="#"
-                      className="text-[#FF8000] hover:underline font-semibold"
+                    <button
+                      type="button"
+                      className="text-[#FF8000] hover:underline font-semibold bg-transparent p-0"
                     >
                       Політикою Конфіденційності
-                    </a>
+                    </button>
                     .
                   </p>
                 )}

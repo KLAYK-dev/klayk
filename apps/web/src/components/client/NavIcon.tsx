@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { Badge } from "@klayk/ui/components/ui/badge";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
+import Link from "next/link";
 
 interface NavIconProps {
   href: string;
@@ -15,7 +15,7 @@ interface NavIconProps {
 
 /**
  * Client Component Island - анімована навігаційна іконка
- * 
+ *
  * Особливості:
  * - Мінімальний JS bundle (~12KB для всіх 3 іконок)
  * - Smooth анімації через framer-motion
@@ -23,13 +23,7 @@ interface NavIconProps {
  * - Badge з анімацією появи/зникнення
  * - Анімація при зміні count (spring animation)
  */
-export function NavIcon({
-  href,
-  icon: Icon,
-  count,
-  title,
-  ariaLabel,
-}: NavIconProps) {
+export function NavIcon({ href, icon: Icon, count, title, ariaLabel }: NavIconProps) {
   return (
     <motion.div
       whileHover={{ scale: 1.1 }}
@@ -94,13 +88,7 @@ export function NavIcon({
  * Варіант без анімацій (для критичних performance сценаріїв)
  * Використовуйте замість основного якщо потрібно зменшити bundle
  */
-export function NavIconSimple({
-  href,
-  icon: Icon,
-  count,
-  title,
-  ariaLabel,
-}: NavIconProps) {
+export function NavIconSimple({ href, icon: Icon, count, title, ariaLabel }: NavIconProps) {
   return (
     <Link
       href={href}
@@ -109,13 +97,13 @@ export function NavIconSimple({
       className="relative flex items-center justify-center p-2 rounded-md border border-transparent text-white/90 hover:text-white hover:border-orange-500 hover:shadow-[0_0_10px_rgba(255,165,0,0.6)] transition-all duration-200 active:scale-95"
     >
       <Icon className="h-7 w-7" />
-      
+
       {count > 0 && (
         <span className="absolute -top-1 -right-1 flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-red-600 px-1.5 text-xs font-bold text-white shadow-lg">
           {count > 99 ? "99+" : count}
         </span>
       )}
-      
+
       <span className="sr-only">{title}</span>
     </Link>
   );

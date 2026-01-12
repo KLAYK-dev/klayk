@@ -1,10 +1,12 @@
 "use client";
 
-import * as React from "react";
-import Link from "next/link";
-import { List, ChevronRight, LayoutGrid } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@klayk/ui/components/ui/accordion";
 import { Button } from "@klayk/ui/components/ui/button";
-import { cn } from "@klayk/lib/cn";
 import {
   Sheet,
   SheetContent,
@@ -12,12 +14,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@klayk/ui/components/ui/sheet";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@klayk/ui/components/ui/accordion";
+import { cn } from "@klayk/ui/lib/cn";
+import { ChevronRight, LayoutGrid, List } from "lucide-react";
+import Link from "next/link";
+import * as React from "react";
 
 interface Category {
   title: string;
@@ -35,40 +35,15 @@ const categories: Category[] = [
     subcategories: [
       {
         title: "Одяг",
-        items: [
-          "Сукні",
-          "Футболки",
-          "Спідниці",
-          "Джинси",
-          "Куртки",
-          "Светри",
-          "Блузки",
-          "Костюми",
-        ],
+        items: ["Сукні", "Футболки", "Спідниці", "Джинси", "Куртки", "Светри", "Блузки", "Костюми"],
       },
       {
         title: "Взуття",
-        items: [
-          "Кросівки",
-          "Туфлі",
-          "Босоніжки",
-          "Чоботи",
-          "Балетки",
-          "Кеди",
-          "Черевики",
-        ],
+        items: ["Кросівки", "Туфлі", "Босоніжки", "Чоботи", "Балетки", "Кеди", "Черевики"],
       },
       {
         title: "Аксесуари",
-        items: [
-          "Сумки",
-          "Прикраси",
-          "Годинники",
-          "Окуляри",
-          "Ремені",
-          "Шарфи",
-          "Рукавички",
-        ],
+        items: ["Сумки", "Прикраси", "Годинники", "Окуляри", "Ремені", "Шарфи", "Рукавички"],
       },
     ],
   },
@@ -78,15 +53,7 @@ const categories: Category[] = [
     subcategories: [
       {
         title: "Одяг",
-        items: [
-          "Футболки",
-          "Джинси",
-          "Костюми",
-          "Куртки",
-          "Светри",
-          "Сорочки",
-          "Штани",
-        ],
+        items: ["Футболки", "Джинси", "Костюми", "Куртки", "Светри", "Сорочки", "Штани"],
       },
       {
         title: "Взуття",
@@ -94,14 +61,7 @@ const categories: Category[] = [
       },
       {
         title: "Аксесуари",
-        items: [
-          "Годинники",
-          "Ремені",
-          "Гаманці",
-          "Сумки",
-          "Рюкзаки",
-          "Окуляри",
-        ],
+        items: ["Годинники", "Ремені", "Гаманці", "Сумки", "Рюкзаки", "Окуляри"],
       },
     ],
   },
@@ -147,12 +107,7 @@ const categories: Category[] = [
     subcategories: [
       {
         title: "Косметика",
-        items: [
-          "Макіяж",
-          "Догляд за обличчям",
-          "Догляд за тілом",
-          "Парфумерія",
-        ],
+        items: ["Макіяж", "Догляд за обличчям", "Догляд за тілом", "Парфумерія"],
       },
       {
         title: "Гігієна",
@@ -186,9 +141,7 @@ const categories: Category[] = [
 
 export function CatalogMenu() {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [activeCategory, setActiveCategory] = React.useState<Category>(
-    categories[0],
-  );
+  const [activeCategory, setActiveCategory] = React.useState<Category>(categories[0]);
   const [isMobile, setIsMobile] = React.useState(false);
   const menuRef = React.useRef<HTMLDivElement>(null);
 
@@ -229,10 +182,7 @@ export function CatalogMenu() {
             <span className="sr-only text-base">Каталог</span>
           </Button>
         </SheetTrigger>
-        <SheetContent
-          side="left"
-          className="w-[85vw] sm:w-[350px] overflow-y-auto"
-        >
+        <SheetContent side="left" className="w-[85vw] sm:w-[350px] overflow-y-auto">
           <SheetHeader>
             <SheetTitle>Категорії</SheetTitle>
           </SheetHeader>
@@ -304,6 +254,7 @@ export function CatalogMenu() {
             <div className="p-4 bg-black-50 rounded-l-lg">
               {categories.map((category) => (
                 <button
+                  type="button"
                   key={category.href}
                   className={cn(
                     "w-full text-left px-4 py-3 rounded-lg",

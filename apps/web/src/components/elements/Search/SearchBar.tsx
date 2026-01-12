@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import debounce from "lodash.debounce";
+import { Button } from "@klayk/ui/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -10,12 +9,13 @@ import {
   CommandItem,
   CommandList,
 } from "@klayk/ui/components/ui/command";
-import { useFormStatus } from "react-dom";
-import { PawPrint, Search } from "lucide-react";
-import { Button } from "@klayk/ui/components/ui/button";
 import { Skeleton } from "@klayk/ui/components/ui/skeleton";
-import { useProductSearch } from "@/hooks/use-product-search";
+import debounce from "lodash.debounce";
+import { PawPrint, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { useFormStatus } from "react-dom";
+import { useProductSearch } from "@/hooks/use-product-search";
 import styles from "./SearchBar.module.css"; // обов'язково підключено CSS
 
 export function SearchBar() {
@@ -39,7 +39,7 @@ export function SearchBar() {
     } else {
       setShowResults(false);
     }
-  }, [query]);
+  }, [query, debouncedSearch]);
 
   const onSelect = (id: string) => {
     router.push(`/product/${id}`);
@@ -62,7 +62,7 @@ export function SearchBar() {
         <Command className="w-full border-none">
           <div className={styles.inputWrapper}>
             <CommandInput
-              ref={inputRef}
+              ref={inputRef as any}
               name="q"
               value={query}
               onValueChange={setQuery}

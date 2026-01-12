@@ -4,7 +4,7 @@ export type Device = "mobile" | "desktop";
 
 export async function getDevice(): Promise<Device> {
   const headersList = await headers();
-  
+
   // Client Hints (найточніший метод)
   const isMobileHint = headersList.get("sec-ch-ua-mobile");
   if (isMobileHint === "?1") return "mobile";
@@ -12,7 +12,7 @@ export async function getDevice(): Promise<Device> {
 
   // Fallback на User-Agent
   const ua = headersList.get("user-agent") || "";
-  const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|Opera Mini/i.test(ua);
-  
-  return isMobileUA ? "mobile" : "desktop";
+  const isMobileUa = /Android|webOS|iPhone|iPad|iPod|BlackBerry|Opera Mini/i.test(ua);
+
+  return isMobileUa ? "mobile" : "desktop";
 }
