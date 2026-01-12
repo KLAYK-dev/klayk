@@ -1,28 +1,46 @@
 {
-  "name": "web",
+  "name": "@klayk/web",
   "version": "0.1.0",
-  "type": "module",
   "private": true,
   "scripts": {
-    "dev": "next dev --port 3000",
+    "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --max-warnings 0",
-    "check-types": "next typegen && tsc --noEmit"
+    "lint": "bun x @biomejs/biome lint ./src",
+    "format": "bun x @biomejs/biome format --write ./src",
+    "check": "bun x @biomejs/biome check --write ./src"
   },
   "dependencies": {
-    "@repo/ui": "*",
-    "next": "16.1.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "@klayk/ui": "workspace:*",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.26.1",
+    "lodash.debounce": "^4.0.8",
+    "lucide-react": "^0.562.0",
+    "next": "16.1.1",
+    "next-auth": "^4.24.13",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
-    "@types/node": "^22.15.3",
-    "@types/react": "19.2.2",
-    "@types/react-dom": "19.2.2",
-    "eslint": "^9.39.1",
-    "typescript": "5.9.2"
-  }
+    "@biomejs/biome": "2.3.11",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/lodash.debounce": "^4.0.9",
+    "@types/node": "^25.0.5",
+    "@types/react": "^19.2.8",
+    "@types/react-dom": "^19.2.3",
+    "babel-plugin-react-compiler": "1.0.0",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "ignoreScripts": [
+    "sharp",
+    "unrs-resolver"
+  ],
+  "trustedDependencies": [
+    "sharp",
+    "unrs-resolver"
+  ]
 }

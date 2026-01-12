@@ -1,0 +1,52 @@
+.inputWrapper {
+  position: relative;
+  width: 100%;
+  padding-right: 120px;
+}
+
+.commandInput {
+  background: transparent;
+  width: 100%;
+  z-index: 2;
+  position: relative;
+}
+
+.typewriterPlaceholder {
+  position: absolute;
+  top: 50%;
+  left: 0.75rem;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  color: #6b7280;
+  pointer-events: none;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 100%;
+  z-index: 1;
+}
+
+.typewriterPlaceholder span {
+  padding-left: 0.5rem;
+  display: inline-block;
+  animation: typing 5s steps(30, end) infinite;
+}
+
+@keyframes typing {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 26ch;
+  }
+}
+
+@media (max-width: 640px) {
+  .inputWrapper {
+    padding-right: 80px;
+  }
+  .typewriterPlaceholder {
+    font-size: 0.875rem;
+  }
+}
