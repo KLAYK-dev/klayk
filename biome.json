@@ -101,6 +101,36 @@
           }
         }
       }
+    },
+    {
+      "includes": [
+        "mcp-commands.js",
+        "mcp-setup.ps1",
+        "mcp-setup.sh",
+        "**/cli/**",
+        "**/*-cli.js",
+        "**/*-cli.ts"
+      ],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsole": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["packages/database/src/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useNamingConvention": "off"
+          },
+          "suspicious": {
+            "noConsole": "off"
+          }
+        }
+      }
     }
   ]
 }

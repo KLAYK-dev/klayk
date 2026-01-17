@@ -1,0 +1,147 @@
+📦 @klayk/database - PACKAGE CREATED SUCCESSFULLY
+=====================================================
+
+✅ СТРУКТУРА ПАКЕТА СТВОРЕНА:
+
+packages/database/
+├── .gitignore                      # Git ignore rules
+├── .env.example                    # Environment template
+├── drizzle.config.ts               # Drizzle ORM конфіг
+├── package.json                    # Package metadata
+├── tsconfig.json                   # TypeScript конфіг
+├── README.md                       # Повна документація
+├── GETTING_STARTED.md              # Швидкий старт гайд
+├── TYPES.md                        # Типи даних docstring
+└── src/
+    ├── index.ts                    # Drizzle DB інстанс
+    ├── schema/
+    │   └── index.ts                # Всі таблиці та relations
+    ├── queries/
+    │   └── index.ts                # Pre-made CRUD функції
+    └── migrations/
+        └── index.ts                # Migration helpers
+
+===========================================
+📚 ТАБЛИЦІ БД НАЛАШТОВАНІ:
+===========================================
+
+✓ Users (користувачи)
+  - ID, email, name, password, avatar, bio
+  - Roles: user, seller, admin
+  - Relations: products, orders, reviews
+
+✓ Categories (категорії)
+  - ID, name, slug, description
+  - Parent ID для підкатегорій
+  - Relations: products
+
+✓ Products (товари)
+  - ID, name, slug, description
+  - Ціна, stock, рейтинг
+  - Relations: category, seller, reviews, orders
+
+✓ Orders (замовлення)
+  - ID, order number, total amount
+  - Status: pending, processing, shipped, delivered, cancelled
+  - Relations: user, items
+
+✓ OrderItems (товари в замовленнях)
+  - ID, quantity, price at purchase
+  - Relations: order, product
+
+✓ Reviews (відгуки)
+  - ID, rating (1-5), comment
+  - Is verified, is approved (для модерації)
+  - Relations: product, user
+
+===========================================
+🔧 ВСТАНОВЛЕНІ ЗАЛЕЖНОСТІ:
+===========================================
+
+Dependencies:
+  • drizzle-orm@1.14.1       - ORM
+  • dotenv@16.4.7            - Environment variables
+
+DevDependencies:
+  • drizzle-kit@0.32.1       - Migration tool
+  • postgres@3.4.4           - PostgreSQL driver
+  • typescript@5.9.2         - Type safety
+  • @types/node@25.0.5       - Node types
+
+===========================================
+📝 ДОСТУПНІ КОМАНДИ:
+===========================================
+
+npm run db:push              # Запустити migrations на БД
+npm run db:pull              # Витягти schema з БД
+npm run db:generate          # Генерувати migrations
+npm run db:studio            # Відкрити Drizzle Studio (GUI)
+npm run db:migrate           # Запустити migrations програмно
+
+npm run check-types          # TypeScript перевірка
+npm run lint                 # Biome linting
+npm run format               # Автоматичне форматування
+
+===========================================
+🚀 ШВИДКИЙ СТАРТ:
+===========================================
+
+1. Додати DATABASE_URL в .env:
+   DATABASE_URL="postgresql://user:password@localhost:5432/klayk"
+
+2. Генерувати migrations:
+   npm run db:generate
+
+3. Запустити migrations:
+   npm run db:push
+
+4. Використовувати в коді:
+   import { db, getUserById, getProductById } from "@klayk/database";
+
+===========================================
+📚 ДОКУМЕНТАЦІЯ:
+===========================================
+
+• README.md               - Повна документація
+• GETTING_STARTED.md      - Швидкий старт для розробників
+• TYPES.md                - Детальний опис типів даних
+
+===========================================
+✨ ОСОБЛИВОСТІ:
+===========================================
+
+✓ Type-safe queries з TypeScript
+✓ Drizzle ORM з PostgreSQL
+✓ Pre-made CRUD функції
+✓ Relations та eager loading
+✓ Transaction support
+✓ Migration management
+✓ Drizzle Studio GUI
+✓ Повна документація
+
+===========================================
+🎯 НАСТУПНІ КРОКИ:
+===========================================
+
+1. Встановити PostgreSQL (якщо ще не)
+2. Налаштувати DATABASE_URL у .env
+3. Запустити db:generate та db:push
+4. Додати в свої додатки (API, web app)
+5. Користуватися pre-made queries або писати свої
+
+===========================================
+📖 ДОКУМЕНТАЦІЯ:
+===========================================
+
+Drizzle ORM: https://orm.drizzle.team/
+PostgreSQL: https://www.postgresql.org/docs/
+
+===========================================
+✅ ПАКЕТ ГОТОВИЙ ДО ВИКОРИСТАННЯ
+===========================================
+
+Статус: READY FOR DEVELOPMENT
+
+Для деталей див.:
+- packages/database/README.md
+- packages/database/GETTING_STARTED.md

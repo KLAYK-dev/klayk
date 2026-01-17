@@ -244,11 +244,7 @@ export default function NotFoundPage() {
     // Встановлюємо випадкову ціль для дрона
     const setRandomTarget = () => {
       const padding = 80; // Зменшений відступ від країв екрану для більшої площі польоту
-      const newTarget = getRandomPosition(
-        windowSize.width,
-        windowSize.height,
-        padding,
-      );
+      const newTarget = getRandomPosition(windowSize.width, windowSize.height, padding);
       currentTargetRef.current = newTarget;
       setDroneTarget(newTarget);
     };
@@ -274,14 +270,10 @@ export default function NotFoundPage() {
       if (droneState.controlMode === "keyboard") {
         const speed = droneState.turboMode ? 8 : 4;
 
-        if (keyPressedRef.current.ArrowUp || keyPressedRef.current.w)
-          vy = -speed;
-        if (keyPressedRef.current.ArrowDown || keyPressedRef.current.s)
-          vy = speed;
-        if (keyPressedRef.current.ArrowLeft || keyPressedRef.current.a)
-          vx = -speed;
-        if (keyPressedRef.current.ArrowRight || keyPressedRef.current.d)
-          vx = speed;
+        if (keyPressedRef.current.ArrowUp || keyPressedRef.current.w) vy = -speed;
+        if (keyPressedRef.current.ArrowDown || keyPressedRef.current.s) vy = speed;
+        if (keyPressedRef.current.ArrowLeft || keyPressedRef.current.a) vx = -speed;
+        if (keyPressedRef.current.ArrowRight || keyPressedRef.current.d) vx = speed;
 
         // Розрахунок кута нахилу
         if (vx !== 0 || vy !== 0) {
@@ -308,8 +300,7 @@ export default function NotFoundPage() {
           1 -
             distance /
               Math.sqrt(
-                windowSize.width * windowSize.width +
-                  windowSize.height * windowSize.height,
+                windowSize.width * windowSize.width + windowSize.height * windowSize.height,
               ),
         );
         const easedProgress = easeInOutCubic(progress);
@@ -468,8 +459,7 @@ export default function NotFoundPage() {
       <div
         className="absolute inset-0 z-0"
         style={{
-          background:
-            "radial-gradient(circle at center, #121212 0%, #050505 100%)",
+          background: "radial-gradient(circle at center, #121212 0%, #050505 100%)",
         }}
       />
 
@@ -481,28 +471,16 @@ export default function NotFoundPage() {
         <div className="relative overflow-hidden rounded-lg bg-[#0D1426]/80 px-4 py-2 backdrop-blur-sm transition-all duration-300 group-hover:bg-[#0D1426] group-hover:shadow-[0_0_15px_rgba(0,255,102,0.5)]">
           <h1 className="text-2xl sm:text-3xl font-light tracking-[0.2em] text-white">
             <span className="relative">
-              A
-              <span className="absolute -left-1 top-0 opacity-30 blur-[2px]">
-                A
-              </span>
+              A<span className="absolute -left-1 top-0 opacity-30 blur-[2px]">A</span>
             </span>
             <span className="relative">
-              I
-              <span className="absolute -left-1 top-0 opacity-30 blur-[2px]">
-                I
-              </span>
+              I<span className="absolute -left-1 top-0 opacity-30 blur-[2px]">I</span>
             </span>
             <span className="relative">
-              O
-              <span className="absolute -left-1 top-0 opacity-30 blur-[2px]">
-                O
-              </span>
+              O<span className="absolute -left-1 top-0 opacity-30 blur-[2px]">O</span>
             </span>
             <span className="relative">
-              N
-              <span className="absolute -left-1 top-0 opacity-30 blur-[2px]">
-                N
-              </span>
+              N<span className="absolute -left-1 top-0 opacity-30 blur-[2px]">N</span>
             </span>
           </h1>
           <div className="absolute bottom-0 left-0 h-[2px] w-full bg-gradient-to-r from-transparent via-[#00FF66] to-transparent opacity-70 transition-all duration-500 group-hover:opacity-100" />
@@ -520,9 +498,7 @@ export default function NotFoundPage() {
 
         {showControls && (
           <div className="absolute right-0 mt-2 w-64 rounded-lg bg-[#0D1426]/90 p-4 shadow-lg backdrop-blur-sm">
-            <h3 className="mb-2 text-sm font-semibold text-[#00FF66]">
-              Керування дроном
-            </h3>
+            <h3 className="mb-2 text-sm font-semibold text-[#00FF66]">Керування дроном</h3>
 
             <div className="mb-3 space-y-2 text-xs">
               <div className="flex items-center justify-between">
@@ -566,9 +542,7 @@ export default function NotFoundPage() {
                       key={`drone-color-${color}`}
                       type="button"
                       title={`Change drone color to ${color}`}
-                      onClick={() =>
-                        setDroneState((prev) => ({ ...prev, color }))
-                      }
+                      onClick={() => setDroneState((prev) => ({ ...prev, color }))}
                       className={`h-5 w-5 rounded-full ${droneState.color === color ? "ring-2 ring-white" : ""}`}
                       style={{ backgroundColor: color }}
                     />
@@ -579,8 +553,7 @@ export default function NotFoundPage() {
 
             <div className="space-y-1 text-xs text-gray-300">
               <p>
-                <span className="font-semibold">Клавіатура:</span> Стрілки або
-                WASD
+                <span className="font-semibold">Клавіатура:</span> Стрілки або WASD
               </p>
               <p>
                 <span className="font-semibold">Миша:</span> Перетягування
@@ -589,12 +562,10 @@ export default function NotFoundPage() {
                 <span className="font-semibold">Клік:</span> Зміна кольору
               </p>
               <p>
-                <span className="font-semibold">Подвійний клік:</span> Турбо
-                режим
+                <span className="font-semibold">Подвійний клік:</span> Турбо режим
               </p>
               <p>
-                <span className="font-semibold">Клавіші:</span> K (режим), T
-                (турбо), C (колір)
+                <span className="font-semibold">Клавіші:</span> K (режим), T (турбо), C (колір)
               </p>
             </div>
           </div>
@@ -634,8 +605,7 @@ export default function NotFoundPage() {
             className="relative overflow-hidden rounded-full bg-transparent px-8 py-2 text-white transition-all duration-300 hover:bg-[#00FF66]/20 font-['Montserrat',sans-serif]"
             style={{
               border: "1px solid #00FF66",
-              boxShadow:
-                "0 0 10px rgba(0, 255, 102, 0.5), 0 0 20px rgba(0, 255, 102, 0.3) inset",
+              boxShadow: "0 0 10px rgba(0, 255, 102, 0.5), 0 0 20px rgba(0, 255, 102, 0.3) inset",
             }}
           >
             <span className="relative z-10 flex items-center">
@@ -775,11 +745,7 @@ export default function NotFoundPage() {
 
       {/* Підключення Google Fonts - оптимізовано для швидшого завантаження */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossOrigin="anonymous"
-      />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Poppins:wght@300;400;500&display=swap"
         rel="stylesheet"

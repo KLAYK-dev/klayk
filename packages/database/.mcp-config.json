@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schema.anthropic.com/mcp/v1/mcp-server-config.json",
+  "mcpServers": {
+    "drizzle": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "github:defrex/drizzle-mcp",
+        "--config",
+        "./packages/database/drizzle.config.ts"
+      ],
+      "env": {
+        "DATABASE_URL": "${DATABASE_URL}",
+        "DEBUG": "drizzle-mcp:*"
+      },
+      "alwaysAllow": ["execute_query", "generate_migration", "get_schema_info"]
+    }
+  }
+}

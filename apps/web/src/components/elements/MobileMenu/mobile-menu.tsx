@@ -29,7 +29,7 @@ import {
   User,
 } from "lucide-react";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 // Типи для TypeScript
 interface MenuItem {
@@ -157,84 +157,79 @@ export function MobileMenu() {
     setOpen(false);
   }, []);
 
-// Компонент для відображення пункту меню
-const MenuItemComponent = ({ item, onClick }: { item: MenuItem; onClick?: () => void }) => (
-  <Link
-    href={item.href}
-    onClick={onClick}
-    className="group flex items-center justify-between p-3 rounded-xl 
-               hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 
+  // Компонент для відображення пункту меню
+  const MenuItemComponent = ({ item, onClick }: { item: MenuItem; onClick?: () => void }) => (
+    <Link
+      href={item.href}
+      onClick={onClick}
+      className="group flex items-center justify-between p-3 rounded-xl 
+               hover:bg-linear-to-r hover:from-blue-50 hover:to-indigo-50 
                transition-all duration-200 ease-in-out
                active:scale-95 active:bg-blue-100"
-  >
-    <div className="flex items-center gap-3">
-      <div
-        className="p-2 rounded-lg bg-gray-50 group-hover:bg-white 
+    >
+      <div className="flex items-center gap-3">
+        <div
+          className="p-2 rounded-lg bg-gray-50 group-hover:bg-white 
                       group-hover:shadow-sm transition-all duration-200"
-      >
-        {item.icon}
-      </div>
-      <span className="text-sm font-medium text-gray-900 group-hover:text-blue-700">
-        {item.label}
-      </span>
-    </div>
-    <div className="flex items-center gap-2">
-      {item.isNew && (
-        <Badge variant="secondary" className="bg-green-100 text-green-700 text-xs px-2 py-1">
-          Нове
-        </Badge>
-      )}
-      {item.badge && item.badge > 0 && (
-        <Badge
-          className="bg-red-500 text-white text-xs min-w-[20px] h-5 
-                         flex items-center justify-center rounded-full"
         >
-          {item.badge > 99 ? "99+" : item.badge}
-        </Badge>
-      )}
-    </div>
-  </Link>
-);
+          {item.icon}
+        </div>
+        <span className="text-sm font-medium text-gray-900 group-hover:text-blue-700">
+          {item.label}
+        </span>
+      </div>
+      <div className="flex items-center gap-2">
+        {item.isNew && (
+          <Badge variant="secondary" className="bg-green-100 text-green-700 text-xs px-2 py-1">
+            Нове
+          </Badge>
+        )}
+        {item.badge && item.badge > 0 && (
+          <Badge
+            className="bg-red-500 text-white text-xs min-w-5 h-5 
+                         flex items-center justify-center rounded-full"
+          >
+            {item.badge > 99 ? "99+" : item.badge}
+          </Badge>
+        )}
+      </div>
+    </Link>
+  );
 
-// Компонент для інформаційних пунктів
-const InfoItemComponent = ({ item, onClick }: { item: InfoItem; onClick?: () => void }) => (
-  <Link
-    href={item.href}
-    onClick={onClick}
-    className="flex items-center gap-3 p-2 rounded-lg 
+  // Компонент для інформаційних пунктів
+  const InfoItemComponent = ({ item, onClick }: { item: InfoItem; onClick?: () => void }) => (
+    <Link
+      href={item.href}
+      onClick={onClick}
+      className="flex items-center gap-3 p-2 rounded-lg 
                hover:bg-gray-50 transition-colors duration-150
                active:bg-gray-100"
-  >
-    {item.icon}
-    <span className="text-sm text-gray-700 hover:text-gray-900">{item.label}</span>
-  </Link>
-);
+    >
+      {item.icon}
+      <span className="text-sm text-gray-700 hover:text-gray-900">{item.label}</span>
+    </Link>
+  );
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <button
           type="button"
-          className="p-2 rounded-lg border border-transparent hover:border-green-500 focus:outline-none"
+          className="p-2 rounded-lg hover:bg-white/10 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/30 flex items-center justify-center shrink-0"
           aria-label="Відкрити меню"
+          title="Меню"
         >
-          <Menu className="h-6 w-6 text-white" />
+          <Menu className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
         </button>
       </SheetTrigger>
 
       <SheetContent
         side="left"
-        className="w-[350px] sm:w-[400px] bg-white border-r border-gray-200 
+        className="w-87.5 sm:w-100 bg-white border-r border-gray-200 
                    shadow-2xl backdrop-blur-sm"
       >
         <SheetHeader className="border-b border-gray-100 pb-4">
-          <SheetTitle
-            className="text-xl font-bold text-gray-900 
-                                 bg-gradient-to-r from-blue-600 to-purple-600 
-                                 bg-clip-text text-transparent"
-          >
-            Меню
-          </SheetTitle>
+          <SheetTitle className="text-xl font-bold text-gray-900">Меню</SheetTitle>
         </SheetHeader>
 
         <ScrollArea className="h-[calc(100vh-5rem)] pr-4">
@@ -242,7 +237,7 @@ const InfoItemComponent = ({ item, onClick }: { item: InfoItem; onClick?: () => 
             {/* Головне меню */}
             <div className="space-y-3">
               <div className="flex items-center gap-2">
-                <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full"></div>
+                <div className="w-1 h-6 bg-linear-to-b from-blue-500 to-purple-500 rounded-full"></div>
                 <h4 className="font-semibold text-gray-900">Головне меню</h4>
               </div>
               <div className="space-y-1">
@@ -252,12 +247,12 @@ const InfoItemComponent = ({ item, onClick }: { item: InfoItem; onClick?: () => 
               </div>
             </div>
 
-            <Separator className="bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+            <Separator className="bg-linear-to-r from-transparent via-gray-200 to-transparent" />
 
             {/* Каталог */}
             <div className="space-y-3">
               <div className="flex items-center gap-2">
-                <div className="w-1 h-6 bg-gradient-to-b from-green-500 to-emerald-500 rounded-full"></div>
+                <div className="w-1 h-6 bg-linear-to-b from-green-500 to-emerald-500 rounded-full"></div>
                 <h4 className="font-semibold text-gray-900">Каталог</h4>
               </div>
               <div className="space-y-1">
@@ -267,12 +262,12 @@ const InfoItemComponent = ({ item, onClick }: { item: InfoItem; onClick?: () => 
               </div>
             </div>
 
-            <Separator className="bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+            <Separator className="bg-linear-to-r from-transparent via-gray-200 to-transparent" />
 
             {/* Інформація та підтримка */}
             <div className="space-y-3">
               <div className="flex items-center gap-2">
-                <div className="w-1 h-6 bg-gradient-to-b from-orange-500 to-red-500 rounded-full"></div>
+                <div className="w-1 h-6 bg-linear-to-b from-orange-500 to-red-500 rounded-full"></div>
                 <h4 className="font-semibold text-gray-900">Інформація</h4>
               </div>
               <div className="space-y-1">
@@ -282,12 +277,12 @@ const InfoItemComponent = ({ item, onClick }: { item: InfoItem; onClick?: () => 
               </div>
             </div>
 
-            <Separator className="bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+            <Separator className="bg-linear-to-r from-transparent via-gray-200 to-transparent" />
 
             {/* Налаштування користувача */}
             <div className="space-y-3">
               <div className="flex items-center gap-2">
-                <div className="w-1 h-6 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full"></div>
+                <div className="w-1 h-6 bg-linear-to-b from-purple-500 to-pink-500 rounded-full"></div>
                 <h4 className="font-semibold text-gray-900">Налаштування</h4>
               </div>
               <div className="space-y-1">
@@ -299,7 +294,7 @@ const InfoItemComponent = ({ item, onClick }: { item: InfoItem; onClick?: () => 
 
             {/* Додаткова інформація внизу */}
             <div
-              className="mt-8 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 
+              className="mt-8 p-4 bg-linear-to-r from-blue-50 to-indigo-50 
                             rounded-2xl border border-blue-100"
             >
               <div className="text-center space-y-2">
@@ -308,8 +303,8 @@ const InfoItemComponent = ({ item, onClick }: { item: InfoItem; onClick?: () => 
                   Понад 1 мільйон товарів від перевірених продавців
                 </p>
                 <div className="flex justify-center space-x-1 mt-2">
-                  {[...Array(5)].map((_, i) => (
-                    <div key={`star-${i}`} className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                  {[...Array(5)].map(() => (
+                    <div key={Math.random()} className="w-2 h-2 bg-yellow-400 rounded-full"></div>
                   ))}
                 </div>
               </div>

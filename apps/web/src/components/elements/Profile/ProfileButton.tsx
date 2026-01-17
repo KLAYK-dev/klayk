@@ -63,7 +63,7 @@ export default function ProfileButton() {
           ) : (
             <>
               <AvatarImage src="/4a03.jfif" />
-              <AvatarFallback>KLAYK</AvatarFallback>
+              <AvatarFallback>KL</AvatarFallback>
             </>
           )}
         </Avatar>

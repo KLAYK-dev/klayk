@@ -1,0 +1,41 @@
+{
+  "name": "@klayk/database",
+  "version": "0.0.1",
+  "description": "Drizzle ORM database layer for KLAYK Marketplace",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./src/schema/index.ts",
+    "./queries": "./src/queries/index.ts",
+    "./migrations": "./src/migrations/index.ts",
+    "./*": "./src/*"
+  },
+  "scripts": {
+    "db:push": "drizzle-kit push",
+    "db:pull": "drizzle-kit pull",
+    "db:generate": "drizzle-kit generate",
+    "db:studio": "drizzle-kit studio",
+    "db:migrate": "drizzle-kit migrate",
+    "db:mcp": "npx -y github:defrex/drizzle-mcp --config ./drizzle.config.ts",
+    "db:mcp:dev": "DEBUG=* npm run db:mcp",
+    "lint": "bun x @biomejs/biome lint ./src",
+    "format": "bun x @biomejs/biome format --write ./src",
+    "check": "bun x @biomejs/biome check --write ./src",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.45.1",
+    "dotenv": "^17.2.3"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "*",
+    "@types/node": "^25.0.5",
+    "drizzle-kit": "^0.31.8",
+    "postgres": "^3.4.8",
+    "typescript": "5.9.2"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

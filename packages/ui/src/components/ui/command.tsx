@@ -2,12 +2,15 @@
 
 import type { DialogProps } from "@radix-ui/react-dialog";
 import { Command as CommandPrimitive } from "cmdk";
-import { Search } from "lucide-react";
 import * as React from "react";
 import { cn } from "../../lib/cn";
 import { Dialog, DialogContent } from "./dialog";
 
-const Command = React.forwardRef<
+// ✅ Додаємо явний тип ": React.ForwardRefExoticComponent<...>"
+const Command: React.ForwardRefExoticComponent<
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive> &
+    React.RefAttributes<React.ElementRef<typeof CommandPrimitive>>
+> = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive>
 >(({ className, ...props }, ref) => (
@@ -34,39 +37,48 @@ const CommandDialog = ({ children, ...props }: DialogProps) => {
   );
 };
 
-const CommandInput = React.forwardRef<
+// ✅ Явна типізація для CommandInput
+const CommandInput: React.ForwardRefExoticComponent<
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input> &
+    React.RefAttributes<React.ElementRef<typeof CommandPrimitive.Input>>
+> = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
 >(({ className, ...props }, ref) => (
-  <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
-    <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
-    <CommandPrimitive.Input
-      ref={ref}
-      className={cn(
-        "flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
-        className,
-      )}
-      {...props}
-    />
-  </div>
+  <CommandPrimitive.Input
+    ref={ref}
+    className={cn(
+      "flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
+      className,
+    )}
+    {...props}
+  />
 ));
 
 CommandInput.displayName = CommandPrimitive.Input.displayName;
 
-const CommandList = React.forwardRef<
+// ✅ Явна типізація для CommandList
+const CommandList: React.ForwardRefExoticComponent<
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.List> &
+    React.RefAttributes<React.ElementRef<typeof CommandPrimitive.List>>
+> = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.List>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.List>
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.List
     ref={ref}
-    className={cn("max-h-[300px] overflow-y-auto overflow-x-hidden", className)}
+    className={cn("max-h-[300px] overflow-y-auto overflow-x-hidden overscroll-contain", className)}
     {...props}
   />
 ));
 
 CommandList.displayName = CommandPrimitive.List.displayName;
 
-const CommandEmpty = React.forwardRef<
+// ✅ Явна типізація для CommandEmpty
+const CommandEmpty: React.ForwardRefExoticComponent<
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty> &
+    React.RefAttributes<React.ElementRef<typeof CommandPrimitive.Empty>>
+> = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Empty>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
 >((props, ref) => (
@@ -75,7 +87,11 @@ const CommandEmpty = React.forwardRef<
 
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName;
 
-const CommandGroup = React.forwardRef<
+// ✅ Явна типізація для CommandGroup
+const CommandGroup: React.ForwardRefExoticComponent<
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Group> &
+    React.RefAttributes<React.ElementRef<typeof CommandPrimitive.Group>>
+> = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Group>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Group>
 >(({ className, ...props }, ref) => (
@@ -91,7 +107,11 @@ const CommandGroup = React.forwardRef<
 
 CommandGroup.displayName = CommandPrimitive.Group.displayName;
 
-const CommandSeparator = React.forwardRef<
+// ✅ Явна типізація для CommandSeparator
+const CommandSeparator: React.ForwardRefExoticComponent<
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Separator> &
+    React.RefAttributes<React.ElementRef<typeof CommandPrimitive.Separator>>
+> = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Separator>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Separator>
 >(({ className, ...props }, ref) => (
@@ -103,14 +123,22 @@ const CommandSeparator = React.forwardRef<
 ));
 CommandSeparator.displayName = CommandPrimitive.Separator.displayName;
 
-const CommandItem = React.forwardRef<
+// ✅ Явна типізація для CommandItem
+const CommandItem: React.ForwardRefExoticComponent<
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item> &
+    React.RefAttributes<React.ElementRef<typeof CommandPrimitive.Item>>
+> = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item>
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected='true']:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+      "relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none",
+      "data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
+      "data-[selected='true']:bg-accent data-[selected='true']:text-accent-foreground",
+      "aria-selected:bg-accent aria-selected:text-accent-foreground",
+      "[&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
       className,
     )}
     {...props}
